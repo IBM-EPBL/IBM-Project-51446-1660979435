@@ -1,0 +1,135 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MainMaster.master.cs" Inherits="MainMaster" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Untitled Page</title>
+    <asp:contentplaceholder id="head" runat="server">
+    </asp:contentplaceholder>
+    <style type="text/css">
+        .style1
+        {
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: xx-large;
+            font-family: Algerian;
+            text-align: left;
+        }
+        .style2
+        {
+            font-family: Verdana;
+            font-weight: bold;
+            font-size: x-small;
+            color:#00307B;
+        }
+        .style3
+        {
+        	font-family: Verdana;
+            font-weight: bold;
+            font-size: x-small;
+        	color:White;
+        	}
+       .bgcolor
+       {
+       	background-color:#00307B;
+       } 	
+    </style>
+</head>
+<body class="bgcolor">
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <center>
+            <br />
+            <table width="95%" bgcolor="#00307B" border="2" style="border-color: #00307B" cellpadding="0"
+                cellspacing="0">
+                <tr>
+                    <td align="left" colspan="3">
+                        <br />
+                        <br />
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        <img class="" alt="Purdue University Automobile" src="Images/25.jpg" border="0" style="height: 78px;
+                                            width: 151px;"></p>
+                                </td>
+                                <td width="100px">
+                                </td>
+                                <td>
+                                    <span class="style1">Customer Service Desk</span>
+                                </td>
+                                <td width="100px">
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        <img class="" alt="Purdue University Automobile" src="Images/24.jpg" border="0" style="height: 78px;
+                                            width: 151px;"></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <table height="20px" width="100%" bgcolor="white">
+                            <tr>
+                                <td width="100px">
+                                    <a href="Default.aspx" class="style2">Home</a>
+                                </td>
+                                <td width="100px">
+                                    <a href="AboutUs.aspx" class="style2">About Us</a>
+                                </td>
+                                <td width="100px">
+                                    <a href="ContactUs.aspx" class="style2">Contact Us</a>
+                                </td>
+                                <td width="100px">
+                                    <a href="CustomerRegistration.aspx" class="style2">Registration</a>
+                                </td>
+                                <td width="100px">
+                                    <a href="Login.aspx" class="style2">LogIn</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="10px" colspan="3">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%">
+                        <table>
+                            <tr>
+                                <td align="top">
+                                    <p align="center">
+                                        <img class="" alt="Purdue  727" src="Images/3.jpg" border="0" style="width: 139px"></p>
+                                    <p align="center">
+                                        <img class="" alt="Purdue care" src="Images/4.jpg" border="0" style="height: 68px"></p>
+                                    <p align="center">
+                                        <img class="" alt="Purdue University Customer" src="Images/22.jpg" border="0" style="height: 68px"></p>
+                                    <p align="center">
+                                        <img class="" alt="service" src="Images/5.jpg" border="0"></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="70%" valign="top" bgcolor="#F7F3F7">
+                        <div style="width: 108%; height: 430px; overflow: auto">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="center" bgcolor="#00307B">
+                        <p class="style3">
+                            <a href="http://www.techinnova.co.in" target="_blank" style="color: white">TechInnova</a>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+
+ADMIN:
+1) Designation Master;
+	Modify
+	If you select 'Project Manager', showing the error
+	'No Record found.' below. check it!!
+
+2) Complaint Master: Incharge ID is missing.
+
+3) Complaint Escalation:
+	Drop down values are NOT fetching for Complaint reg. id, empid.
+
+4) Customer feedback: Customer ID is missing in modify.
+
+
+5) IN ALL THE FORMS THE DROP DOWN VALUES ARE NOT FETCHING,
+PLEASE CHECK IT!!
+
+
+Customer:
+All forms IDs are missing

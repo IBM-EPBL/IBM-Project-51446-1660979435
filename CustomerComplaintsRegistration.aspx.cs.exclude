@@ -1,0 +1,374 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+
+public partial class Employee_CustomerComplaintsRegistration : System.Web.UI.Page
+{
+    clsCustomerComplaints objComplaint = new clsCustomerComplaints();
+    clsCustomer objCustomer = new clsCustomer();
+    clsService objService = new clsService();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        lblMsg.Text = "";
+        btnCloseGrid.Visible = false;
+        if (!IsPostBack)
+        {
+        }
+
+    }
+    protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            if (RadioButtonList1.SelectedIndex == 0)
+            {
+                ClearData();
+                ddlCustomerId.Items.Clear();
+                ddlServiceCustomerDomainId.Items.Clear();
+                ddlEmpId.Items.Clear();
+                ddlCustomerId.Enabled = true;
+                ddlServiceCustomerDomainId.Enabled = true;
+                ddlHrs.Visible = true;
+                ddlMins.Visible = true;
+                ddlAm.Visible = true;
+                ddlEmpId.Enabled = true;
+                btnSubmit.Text = "Submit new record";
+                btnSubmit.Enabled = true;
+                BindCustomerIds();
+                BindServiceCustomerDomainIds();
+                BindEmpIds();
+                if (ddlCustomerId.Items.Count != 0)
+                    ddlCustomerId.SelectedIndex = 0;
+                if (ddlServiceCustomerDomainId.Items.Count != 0)
+                    ddlServiceCustomerDomainId.SelectedIndex = 0;
+                if (ddlEmpId.Items.Count != 0)
+                    ddlEmpId.SelectedIndex = 0;
+                ddlComplaintRegistrationId.Enabled = false;
+                txtRegistratinTime.Visible = false;
+
+            }
+            else if (RadioButtonList1.SelectedIndex == 1)
+            {
+                ddlCustomerId.Items.Clear();
+                ddlServiceCustomerDomainId.Items.Clear();
+                ddlEmpId.Items.Clear();
+                grdAllCustomerComplaints.Visible = false;
+                btnCloseGrid.Visible = false;
+                ClearData();
+                BindComplaintRegistrationIds();
+                btnSubmit.Text = "Modify record";
+                btnSubmit.Enabled = true;
+                ddlComplaintRegistrationId.Enabled = true;
+                txtRegistratinTime.Visible = true;
+                ddlCustomerId.Enabled = false;
+                ddlServiceCustomerDomainId.Enabled = false;
+                ddlEmpId.Enabled = false;
+                ddlHrs.Visible = false;
+                ddlMins.Visible = false;
+                ddlAm.Visible = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+
+    }
+    protected void ddlComplaintRegistrationId_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            if (ddlComplaintRegistrationId.SelectedIndex != 0)
+            {
+                grdAllCustomerComplaints.Visible = false;
+                btnCloseGrid.Enabled = false;
+                objComplaint.ComplaintRegistrationId  = Convert.ToInt32(ddlComplaintRegistrationId.SelectedItem.Value);
+                DataSet ds = objComplaint.GetComplaintRegistrationDataByComplaintRegistrationId();
+                DataRow dr = ds.Tables[0].Rows[0];
+                if (ds.Tables[0].Rows.Count != 0)
+                {
+                    txtRegistrationDate.Text = dr["RegistrationDate"].ToString();
+                    txtRegistratinTime.Text = dr["RegistrationTime"].ToString();
+                    txtPhoneNo.Text = dr["PhoneNo"].ToString();
+                    txtComplaint.Text = dr["TextofComplaint"].ToString();
+                    //BrowseFile1.Load = (byte[])dr[8];
+                    //BrowseFile1.LoadFileName = Convert.ToString(dr[9]);
+                    //BrowseFile1.Load();
+                    txtStatus.Text = dr["ComplaintStatus"].ToString();
+                    txtEscalatedStatus.Text = dr["ComplaintEscalatedStatus"].ToString();
+                    txtCount.Text = dr["CountOfEscalation"].ToString();
+                    txtResponseText.Text = dr["ComplaintResponseText"].ToString();
+                    //BrowseFile2.LaodImageByte = (byte[])dr[14];
+                    //BrowseFile2.LoadFileName = Convert.ToString(dr[15]);
+                    //BrowseFile2.LoadImage();
+                  
+                    txtSeverity.Text = dr["ComplaintSeverity"].ToString();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    protected void btnShowAll_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            divcomplaint.Visible = true;
+            ClearData();
+            btnCloseGrid.Enabled = true;
+            if (ddlComplaintRegistrationId.Items.Count != 0)
+                ddlComplaintRegistrationId.SelectedIndex = 0;
+            DataSet ds = objComplaint.GetAllCustomerComplaintsData();
+            ViewState["Data"] = ds;
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                grdAllCustomerComplaints.DataSource = ds.Tables[0];
+                grdAllCustomerComplaints.DataBind();
+                grdAllCustomerComplaints.Visible = true;
+                btnCloseGrid.Visible = true;
+            }
+            else
+            {
+                grdAllCustomerComplaints.EmptyDataText = "No Records Found..";
+                grdAllCustomerComplaints.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+
+    public void ClearData()
+    {
+        txtRegistrationDate.Text = "";
+        txtRegistratinTime.Text = "";
+        txtPhoneNo.Text = "";
+        txtComplaint.Text = "";
+        txtStatus.Text = "";
+        txtEscalatedStatus.Text = "";
+        txtCount.Text = "";
+        txtResponseText.Text = "";
+        txtSeverity.Text = "";
+    }
+    public void BindCustomerIds()
+    {
+        try
+        {
+            DataSet ds = objCustomer.GetAllCustomerIds();
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                ddlCustomerId.DataSource = ds.Tables[0];
+                ddlCustomerId.DataValueField = "CustomerId";
+                ddlCustomerId.DataTextField = "CustomerName";
+                ddlCustomerId.DataBind();
+                ddlCustomerId.Items.Insert(0, "--Select One--");
+            }
+            else
+            {
+                lblMsg.Text = "No Records Found..";
+
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+
+    public void BindEmpIds()
+    {
+        try
+        {
+            DataSet ds = objCustomer.GetAllComplaintEmpIds();
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                ddlEmpId.DataSource = ds.Tables[0];
+                ddlEmpId.DataValueField = "EmpId";
+                ddlEmpId.DataTextField = "Emp_FirstName";
+                ddlEmpId.DataBind();
+                ddlEmpId.Items.Insert(0, "--Select One--");
+            }
+            else
+            {
+                lblMsg.Text = "No Records Found..";
+
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+
+    public void BindServiceCustomerDomainIds()
+    {
+        try
+        {
+            DataSet ds =
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                ddlServiceCustomerDomainId.DataSource =  objService.GetAllServiceCustomerDomainIds();
+                ddlServiceCustomerDomainId.DataValueField = "ServiceCustomerDomainId";
+                ddlServiceCustomerDomainId.DataTextField = "ServiceCustomerDomainId";
+                ddlServiceCustomerDomainId.DataBind();
+                ddlServiceCustomerDomainId.Items.Insert(0, "--Select One--");
+            }
+            else
+            {
+                lblMsg.Text = "No Records Found..";
+
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    public void BindComplaintRegistrationIds()
+    {
+        try
+        {
+            
+            DataSet ds = objComplaint.GetAllComplaintRegistrationIds();
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                ddlComplaintRegistrationId.DataSource = ds.Tables[0];
+                ddlComplaintRegistrationId.DataValueField = "ComplaintRegistrationId";
+                ddlComplaintRegistrationId.DataTextField = "ComplaintRegistrationId";
+                ddlComplaintRegistrationId.DataBind();
+                ddlComplaintRegistrationId.Items.Insert(0, "--Select One--");
+            }
+            else
+            {
+                lblMsg.Text = "No Records Found..";
+
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (RadioButtonList1.SelectedIndex == 0 && btnSubmit.Text == "Submit new record")
+            {
+                objComplaint.RegistrationDate = txtRegistrationDate.Text;
+                string registrationTime = ddlHrs.SelectedItem.Value + ":" + ddlMins.SelectedItem.Value + ":" + ddlAm.SelectedItem.Value;
+                objComplaint.RegistrationTime = registrationTime.ToString();
+                objComplaint.CustomerId = Convert.ToInt32(ddlCustomerId.SelectedItem.Value);
+                objComplaint.ServiceCustomerDomainId= Convert.ToInt32(ddlServiceCustomerDomainId.SelectedItem.Value);
+                objComplaint.PhoneNo = txtPhoneNo.Text;
+                objComplaint.TextComplaint = txtComplaint.Text;
+                objComplaint.EmpId = Convert.ToInt32(ddlEmpId.SelectedItem.Value);
+                objComplaint.VoiceText = (byte[])Session["FileContent"];
+                objComplaint.TextFile = Session["FileName"].ToString();
+                objComplaint.Status = txtStatus.Text;
+                objComplaint.EscalatedStatus =txtEscalatedStatus.Text;
+                objComplaint.Count =  Convert.ToInt32(txtCount.Text);
+                objComplaint.ResponseText =txtResponseText.Text;
+                objComplaint.ResponseVoice = (byte[])Session["FileContent"];
+                objComplaint.VoiceFile = Session["FileName"].ToString();
+                objComplaint.Severity = txtSeverity.Text;
+                objComplaint.InsertCustomerComplaintsRegistration();
+                lblMsg.Text = "Record Inserted successfully..";
+            }
+            else
+                if (RadioButtonList1.SelectedIndex == 1 && btnSubmit.Text == "Modify record")
+                {
+                    objComplaint.ComplaintRegistrationId = Convert.ToInt32(ddlComplaintRegistrationId.SelectedItem.Value);
+                    objComplaint.RegistrationDate = txtRegistrationDate.Text;
+                    objComplaint.RegistrationTime = txtRegistratinTime.Text;
+                    objComplaint.PhoneNo = txtPhoneNo.Text;
+                    objComplaint.TextComplaint = txtComplaint.Text;
+                    objComplaint.VoiceText = (byte[])Session["FileContent"];
+                    objComplaint.TextFile = Session["FileName"].ToString(); 
+                    objComplaint.Status = txtStatus.Text;
+                    objComplaint.EscalatedStatus = txtEscalatedStatus.Text;
+                    objComplaint.Count = Convert.ToInt32(txtCount.Text);
+                    objComplaint.ResponseText = txtResponseText.Text;
+                    objComplaint.ResponseVoice = (byte[])Session["FileContent"];
+                    objComplaint.VoiceFile = Session["FileName"].ToString();
+                    objComplaint.Severity = txtSeverity.Text;
+                    objComplaint.UpdateCustomerComplaintsRegistration();
+                    lblMsg.Text = "Record Updated Successfully";
+                    ddlComplaintRegistrationId.SelectedIndex = 0;
+                }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    protected void btncancel_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (RadioButtonList1.SelectedIndex == 0)
+            {
+                ClearData();
+                ddlCustomerId.Items.Clear();
+                ddlServiceCustomerDomainId.Items.Clear();
+                ddlEmpId.Items.Clear();
+            }
+            else
+            {
+                ClearData();
+                ddlComplaintRegistrationId.SelectedIndex = 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    protected void btnCloseGrid_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            divcomplaint.Visible = false;
+            btnCloseGrid.Visible = false;
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    protected void grdAllCustomerComplaints_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        try
+        {
+            DataSet ds = (DataSet)ViewState["Data"];
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                grdAllCustomerComplaints.PageIndex = e.NewPageIndex;
+                grdAllCustomerComplaints.DataSource = ds.Tables[0];
+                grdAllCustomerComplaints.DataBind();
+                grdAllCustomerComplaints.Visible = true;
+                btnCloseGrid.Visible = true;
+            }
+            else
+            {
+                lblMsg.Text = "No Records Found..";
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+}
