@@ -1,0 +1,164 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="EmployeeMaster.master.cs" Inherits="Employee_EmployeeMaste" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Untitled Page</title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .style1
+        {
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: xx-large;
+            font-family: Algerian;
+            text-align: left;
+        }
+        .style3
+        {
+        	font-family: Verdana;
+            font-weight: bold;
+            font-size: x-small;
+        	color:White;
+        	}
+        	 .style4
+        {
+        	color :#003366;
+        	font-weight:bold;
+        	font-size:small;
+        }
+        .bgcolor
+        {
+        	background-color:#00307B;
+        }
+        .style6
+        {
+            width: 119px;
+        }
+        .style7
+        {
+            width: 114px;
+        }
+        </style>
+</head>
+<body class="bgcolor">
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+      <center>
+    <br />
+        <table width="95%" bgcolor="#00307B" border="2" style="border-color: #00307B" cellpadding="0"
+            cellspacing="0">
+            <tr>
+                <td align="left" colspan="3">
+                    <br />
+                    <br />
+                   
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                        <td>
+                            <p align="center">
+                                        <img class="" alt="Purdue University Automobile" src="../Images/25.jpg" border="0" 
+                                            style="height: 78px; width: 151px;"></p>
+                            </td>
+                             <td width="100px">
+                             </td>
+                            <td>
+                                <span class="style1">Customer Service Desk</span>
+                            </td>
+                             <td width="100px">
+                             </td>
+                            <td>
+                            
+                            <p align="center">
+                                        <img class="" alt="Purdue University Automobile" src="../Images/24.jpg" border="0" 
+                                            style="height: 78px; width: 151px;" id=".."></p>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <table height="20px" width="100%" bgcolor="#003366">
+                        <tr style="background-color:white">
+                            <td width="100px">
+                                <a href="EmployeeHome.aspx" class="style4">Home</a>
+                            </td>
+                             <td width="100px">
+                                <a href="ReceiveComplaint.aspx" class="style4">ComplaintReceive</a>
+                            </td>
+                            <td class="style6">
+                                <a href="ComplaintEscalation.aspx"  class="style4">ComplaintEscalation</a>
+                            </td>
+                            <td class="style7">
+                                <a href="CustomerFeedBack.aspx"  class="style4">CustomerFeedBack</a>
+                            </td>
+                            <td class="style7">
+                                <a href="FeedbackEvaluation.aspx"  class="style4">FeedBackEvaluation</a>
+                            </td>
+                            <td class="style7">
+                            <a href="frmServiceCustomerEmpInCharge.aspx" class="style4">EmploeeInCharges</a>
+                            </td>
+                            <td width="100px">
+                                <a href="FrmEmpComposeMails.aspx" class="style4">Emails</a>
+                            </td>
+                            <td width="100px">
+                                <a href="frmEmployeeChatRoom.aspx" class="style4">Chating</a>
+                            </td>
+                            <td width="100px">
+                                <a href="../LogOut.aspx" class="style4">SignOut</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+            <td height="10px" colspan="3">
+            </td>
+            </tr>
+            <tr>
+                <td width="15%">
+                      <table>
+                <tr>
+                <td align="top">
+                 <p align="center">
+                                    <img class="" alt="Purdue  727" src="../Images/3.jpg" border="0" 
+                                        style="width: 139px"></p>
+                                    <p align="center">
+                                        <img class="" alt="Purdue care" src="../Images/4.jpg" border="0" 
+                                            style="height: 68px"></p>
+                                            <p align="center">
+                                        <img class="" alt="Purdue University Customer" src="../Images/22.jpg" border="0" 
+                                            style="height: 68px"></p>
+                                             <p align="center">
+                                              <img class="" alt="Purdue University service" 
+                        src="../Images/23.jpg" border="0" 
+                                            style="height: 69px; width: 139px;"></p>
+                                   
+                </td>
+                </tr>
+                </table>
+                </td>
+                <td width="70%" valign="top" bgcolor="#F7F3F7">
+                    <div style="width:100%; overflow:auto">
+                    
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </td>
+               
+            </tr>
+            <tr>
+            <td colspan="3" align="center" bgcolor="#00307B">
+            <p class="style3" ><a href="http://www.techinnova.co.in" target="_blank" style="color: white">TechInnova</a></p>
+            </td>
+            </tr>
+        </table>
+    </center>
+    </form>
+</body>
+</html>
