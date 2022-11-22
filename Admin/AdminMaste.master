@@ -1,0 +1,160 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AdminMaste.master.cs" Inherits="Admin_AdminMaste" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Untitled Page</title>
+    <asp:contentplaceholder id="head" runat="server">
+    </asp:contentplaceholder>
+    <style type="text/css">
+        .style1
+        {
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: xx-large;
+            font-family: Algerian;
+            text-align: left;
+        }
+        .style3
+        {
+        	font-family: Verdana;
+            font-weight: bold;
+            font-size: x-small;
+        	color:White;
+        	}
+        .style4
+        {
+        	color :#FF9900;
+        	font-weight:bold;
+        	font-size:small;
+        }
+        .bgcolor
+        {
+        	background-color:#00307B;
+        }
+    </style>
+</head>
+<body class="bgcolor">
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <center>
+            <br />
+            <table width="95%" bgcolor="#00307B" border="2" style="border-color: #00307B" cellpadding="0"
+                cellspacing="0">
+                <tr>
+                    <td align="left" colspan="3">
+                        <br />
+                        <br />
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        <img class="" alt="Purdue University Automobile" src="../Images/25.jpg" border="0"
+                                            style="height: 78px; width: 151px;"></p>
+                                </td>
+                                <td width="100px">
+                                </td>
+                                <td>
+                                    <span class="style1">Customer Service Desk</span>
+                                </td>
+                                <td width="100px">
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        <img class="" alt="Purdue University Automobile" src="../Images/24.jpg" border="0"
+                                            style="height: 78px; width: 151px;" id=".."></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <table width="100%" bgcolor="#003366">
+                            <tr>
+                                <td align="left" style="background: white">
+                                    <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" Font-Bold="True" ForeColor="#003366"
+                                        Height="22px" Width="909px" Font-Size="Small">
+                                        <Items>
+                                            <asp:MenuItem Text="|||" Value="|||"></asp:MenuItem>
+                                            <asp:MenuItem NavigateUrl="~/Admin/AdminHome.aspx" Text="Home" Value="Home"></asp:MenuItem>
+                                            <asp:MenuItem Text="||" Value="||"></asp:MenuItem>
+                                            <asp:MenuItem NavigateUrl="~/Admin/frmDomainMaster.aspx" Text="Domain" Value="Domain">
+                                            </asp:MenuItem>
+                                            <asp:MenuItem Text="||" Value="||"></asp:MenuItem>
+                                            <asp:MenuItem NavigateUrl="~/Admin/frmDepartmentMaster.aspx" Text="Department" Value="Department">
+                                            </asp:MenuItem>
+                                            <asp:MenuItem Text="||" Value="||"></asp:MenuItem>
+                                            <asp:MenuItem NavigateUrl="~/Admin/frmDesigationMaster.aspx" Text="Designation" Value="Designation">
+                                            </asp:MenuItem>
+                                            <asp:MenuItem Text="||" Value="||"></asp:MenuItem>
+                                            <asp:MenuItem NavigateUrl="~/Admin/frmAddEmployee.aspx" Text="Employee Profile" Value="Employee Profile">
+                                            </asp:MenuItem>
+                                            <asp:MenuItem Text="||" Value="||"></asp:MenuItem>
+                                            <asp:MenuItem Text="Manage Services" Value="Manage Services">
+                                                <asp:MenuItem NavigateUrl="~/Admin/frmServiceCustomers.aspx" Text="Service Customers"
+                                                    Value="Service Customers"></asp:MenuItem>
+                                                <asp:MenuItem NavigateUrl="~/Admin/frmServiceCustomerDomain.aspx" Text="Service Customer Domain"
+                                                    Value="Service Customer Domain"></asp:MenuItem>
+                                                <asp:MenuItem NavigateUrl="~/Admin/frmServiceCustomerDomainComplaint.aspx" Text="Service Customer Domain Complaints"
+                                                    Value="Service Customer Domain Complaints"></asp:MenuItem>
+                                                <asp:MenuItem NavigateUrl="~/Admin/frmServiceCustomerDomainCustomers.aspx" Text="Service Customer Domain Customers"
+                                                    Value="Service Customer Domain Customers"></asp:MenuItem>
+                                            </asp:MenuItem>
+                                            <asp:MenuItem Text="||" Value="||"></asp:MenuItem>
+                                            <asp:MenuItem Text="Reports" Value="Reports">
+                                                <asp:MenuItem NavigateUrl="~/Admin/frmReportEmployee.aspx" Text="Employee Report"
+                                                    Value="Employee Report"></asp:MenuItem>
+                                                <asp:MenuItem NavigateUrl="~/Admin/frmReportCustomer.aspx" Text="Customer Report"
+                                                    Value="Customer Report"></asp:MenuItem>
+                                                <asp:MenuItem NavigateUrl="~/Admin/frmReportServiceCustomer.aspx" Text="ServiceCustomer Report"
+                                                    Value="ServiceCustomer Report"></asp:MenuItem>
+                                            </asp:MenuItem>
+                                            <asp:MenuItem Text="||" Value="||"></asp:MenuItem>
+                                            <asp:MenuItem Text="LogOut" Value="LogOut" NavigateUrl="~/LogOut.aspx"></asp:MenuItem>
+                                            <asp:MenuItem Text="|||" Value="|||"></asp:MenuItem>
+                                        </Items>
+                                    </asp:Menu>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%">
+                        <table>
+                            <tr>
+                                <td align="top">
+                                    <p align="center">
+                                        <img class="" alt="Purdue  727" src="../Images/3.jpg" border="0" style="width: 139px"></p>
+                                    <p align="center">
+                                        <img class="" alt="Purdue care" src="../Images/4.jpg" border="0" style="height: 68px"></p>
+                                    <p align="center">
+                                        <img class="" alt="Purdue University Customer" src="../Images/22.jpg" border="0"
+                                            style="height: 68px"></p>
+                                    <p align="center">
+                                        <img class="" alt="Purdue University service" src="../Images/23.jpg" border="0" style="height: 69px;
+                                            width: 139px;"></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="70%" valign="top" bgcolor="#F7F3F7">
+                        <div style="width: 100%; height: 430px; overflow: auto">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="center" bgcolor="#00307B">
+                        <p class="style3">
+                            <a href="http://www.techinnova.co.in" target="_blank" style="color: white">TechInnova</a></p>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </form>
+</body>
+</html>

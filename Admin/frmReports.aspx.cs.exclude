@@ -1,0 +1,265 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+
+public partial class Admin_frmReports : System.Web.UI.Page
+{
+    clsCustomer objCustomer = new clsCustomer();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        lblMsg.Text = "";
+        btnCloseGrid.Visible = false;
+        if (!IsPostBack)
+        {
+        }
+    }
+    protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            if (RadioButtonList1.SelectedIndex == 0)
+            {
+
+                ClearData();
+                ddlEmpId.Items.Clear();
+                ddlEmpId.Enabled = true;
+                txtReportTime.Visible = false;
+                btnSubmit.Text = "Submit new record";
+                btnSubmit.Enabled = true;
+                BindEmpIds();
+                if (ddlReportId.Items.Count != 0)
+                    ddlReportId.SelectedIndex = 0;
+                if (ddlEmpId.Items.Count != 0)
+                    ddlEmpId.SelectedIndex = 0;
+                ddlReportId.Enabled = false;
+                ddlHrs.Visible = true;
+                ddlMins.Visible = true;
+                ddlTime.Visible = true;
+            }
+            else if (RadioButtonList1.SelectedIndex == 1)
+            {
+                ddlEmpId.Items.Clear();
+                grdAllReports.Visible = false;
+                btnCloseGrid.Visible = false;
+                txtReportTime.Visible = true;
+                ClearData();
+                BindReportIds();
+                btnSubmit.Text = "Modify record";
+                btnSubmit.Enabled = true;
+                ddlReportId.Enabled = true;
+                ddlEmpId.Enabled = false;
+                ddlTime.Visible = false;
+                ddlHrs.Visible = false;
+                ddlMins.Visible = false;
+            }
+            
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+
+    }
+    public void ClearData()
+    {
+        txtReportDate.Text ="";
+        txtReportTime.Text ="";
+        txtReportFile.Text ="";
+    }
+    protected void ddlReportId_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            if (ddlReportId.SelectedIndex != 0)
+            {
+                grdAllReports.Visible = false;
+                btnCloseGrid.Enabled = false;
+                objCustomer.ReportId  = Convert.ToInt32(ddlReportId.SelectedItem.Value);
+                DataSet ds = objCustomer.GetReportsDataByReportId();
+                DataRow dr = ds.Tables[0].Rows[0];
+                if (ds.Tables[0].Rows.Count != 0)
+                {
+                    txtReportDate.Text = dr[1].ToString();
+                    txtReportTime.Text = dr[2].ToString();
+                    txtReportFile.Text = dr[4].ToString();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    protected void btnShowAll_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            ClearData();
+            btnCloseGrid.Enabled = true;
+            if (ddlReportId.Items.Count != 0)
+                ddlReportId.SelectedIndex = 0;
+            DataSet ds = objCustomer.GetAllReportsData();
+            ViewState["Data"] = ds;
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                grdAllReports.DataSource = ds.Tables[0];
+                grdAllReports.DataBind();
+                grdAllReports.Visible = true;
+                btnCloseGrid.Visible = true;
+            }
+            else
+            {
+                grdAllReports.EmptyDataText = "No Records Found..";
+                grdAllReports.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+
+    }
+    public void BindEmpIds()
+    {
+        try
+        {
+            lblMsg.Text = "";
+            DataSet ds = objCustomer.GetAllDomainInchargeIds();
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                ddlEmpId.DataSource = ds.Tables[0];
+                ddlEmpId.DataValueField = "EmpId";
+                ddlEmpId.DataTextField = "Emp_FirstName";
+                ddlEmpId.DataBind();
+                ddlEmpId.Items.Insert(0, "--Select One--");
+            }
+            else
+            {
+                lblMsg.Text = "No Records Found..";
+
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    public void BindReportIds()
+    {
+        try
+        {
+            lblMsg.Text = "";
+            DataSet ds = objCustomer.GetAllReportIds();
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                ddlReportId.DataSource = ds.Tables[0];
+                ddlReportId.DataValueField = "ReportId";
+                ddlReportId.DataTextField = "ReportId";
+                ddlReportId.DataBind();
+                ddlReportId.Items.Insert(0, "--Select One--");
+            }
+            else
+            {
+                lblMsg.Text = "No Records Found..";
+
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+        if (RadioButtonList1.SelectedIndex == 0 && btnSubmit.Text == "Submit new record")
+        {
+            objCustomer.ReportDate = txtReportDate.Text;
+            string reportTime = ddlHrs.SelectedItem.Value + ":" + ddlMins.SelectedItem.Value + ":" + ddlTime.SelectedItem.Value;
+            objCustomer.ReportTime = reportTime.ToString();
+            objCustomer.EmpId = Convert.ToInt32(ddlEmpId.SelectedItem.Value);
+            objCustomer.ReportFile = txtReportFile.Text;
+            objCustomer.InsertReport();
+            lblMsg.Text = "Record Inserted successfully..";
+
+
+        }
+
+        else if (RadioButtonList1.SelectedIndex == 1 && btnSubmit.Text == "Modify record")
+        {
+            objCustomer.ReportId = Convert.ToInt32(ddlReportId.SelectedItem.Value);
+            objCustomer.ReportTime = txtReportTime.Text;
+            objCustomer.ReportFile = txtReportFile.Text;
+            objCustomer.UpdateDomain();
+            lblMsg.Text = "Record Updated successfully..";
+
+            ddlReportId.SelectedIndex = 0;
+        }
+    }
+    protected void btncancel_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (RadioButtonList1.SelectedIndex == 0)
+            {
+                ClearData();
+                ddlEmpId.Items.Clear();
+            }
+            else
+            {
+                ClearData();
+                ddlReportId.SelectedIndex = 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+    }
+    protected void btnCloseGrid_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            grdAllReports.Visible = false;
+            btnCloseGrid.Visible = false;
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = ex.Message;
+        }
+
+    }
+    protected void grdAllReports_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        try
+        {
+            DataSet ds = (DataSet)ViewState["Data"];
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                grdAllReports.PageIndex = e.NewPageIndex;
+                grdAllReports.DataSource = ds.Tables[0];
+                grdAllReports.DataBind();
+                grdAllReports.Visible = true;
+                btnCloseGrid.Visible = true;
+            }
+            else
+            {
+                lblMsg.Text = "No Records Found..";
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+    
+
+   
+}
